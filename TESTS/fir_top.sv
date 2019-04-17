@@ -40,8 +40,8 @@
 
 //Port mapping and any other logic without encapsulating between module / endmodule
 
-  reg  [7:0] data_in ;
-  wire [7:0] data_out;
+  reg  [ 7:0] data_in ;
+  wire [17:0] data_out;
 
   reg  [3:0] counter;
   
