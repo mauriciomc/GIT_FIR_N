@@ -40,10 +40,47 @@
 
 //Port mapping and any other logic without encapsulating between module / endmodule
 
+  reg  [7:0] data_in ;
+  wire [7:0] data_out;
+
+  reg  [3:0] counter;
+  
+ //Number of windows
+  reg  [4:0] w;
+
+
+//Parameter override if necessary
   fir_top fir_top_u1( 
                       .clk     (clk),
-                      .nrst    (nrst),
+                      .nrst    (nrst & (|counter) ),
+		      .data_in (data_in),
+		      .data_out(data_out)
                     );
+
+  always @(posedge clk)
+  begin : SAMPLE_GENERATION
+    if ( !nrst )
+    begin
+        data_in <= 0;
+        counter <= 0;
+        w       <= 0;
+    end
+    else 
+    begin
+       counter <= counter + 1;
+       if (!counter) 
+       begin
+         data_in <= 0; 
+         w       <= w+1;
+       end
+       else
+         data_in <= $random;
+    end
+    
+    //finish simulation
+    if ( w >= 30 )
+      $finish;
+  end 
 
 // Local Variables:                                              
 // verilog-library-directories:(".")                             
