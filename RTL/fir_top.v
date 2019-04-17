@@ -40,10 +40,68 @@
 
 
 module fir_top ( 
-                 input                   clk,
-                 input                   nrst,
+                 clk,
+                 nrst,
+                 data_in,
+                 data_out
                );
 
+  //Parameters can be overriden at test.sv
+  parameter N         = 8;
+  parameter WIDTH_IN  = 8;           
+  parameter WIDTH_OUT = 2 * WIDTH_IN + 2;            
+  
+  //Filter coeficients: Implements lowpass gaussian
+  parameter B0        = 8'd7 ;
+  parameter B1        = 8'd17;
+  parameter B2        = 8'd32;
+  parameter B3        = 8'd46;
+  parameter B4        = 8'd52;
+  parameter B5        = 8'd46;
+  parameter B6        = 8'd32;
+  parameter B7        = 8'd17;
+  parameter B8        = 8'd7 ;
+  
+  input     [WIDTH_IN -1:0] data_in  ; 
+  input                     clk, nrst;
+  output    [WIDTH_OUT-1:0] data_out ;
+  
+  //Structure composed of a shift register (with length N and bitwidth WIDTH_IN) and Multiply and Accumulate blocks
+  
+  //Samples
+  reg       [WIDTH_IN -1:0] samples [1:N] ;
+  
+  //Loop variable
+  integer   k;
+  
+  //High level MAC implementation (leave it with synthesis to create ADD and MULT blocks for now
+  assign    data_out = B0 * data_in    + 
+                       B1 * samples[1] +
+                       B2 * samples[2] +
+                       B3 * samples[3] +
+                       B4 * samples[4] +
+                       B5 * samples[5] +
+                       B6 * samples[6] +
+                       B7 * samples[7] +
+                       B8 * samples[8]  ;
+
+  //Shift register implementation
+  always @(posedge clk)
+  begin : SHIFT_REGISTER
+    if(!nrst)
+    begin
+     for ( k = 0; k<= N; k=k+1 ) 
+       samples[k]<=0;
+    end
+    else
+    begin
+      samples[1] <= data_in;
+      for ( k = 2; k <= N; k=k+1 )
+        samples[k] <= samples[k-1];
+    end
+  end
+  
+  
 endmodule
 
 // Local Variables:
