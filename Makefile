@@ -29,7 +29,7 @@ LDFLAGS=
 CFLAGS=-g -O3 -DMODULE=\'\"$(MODULE)\"\'
 
 
-all: $(TARGET)
+all: $(TARGET) run schem wave
 
 clean::
 	rm -rf *.o *.json *.svg .script $(TARGET) 
@@ -54,3 +54,5 @@ schem::
 	netlistsvg $(SCHEM)/$(MODULE).json -o $(SCHEM)/$(MODULE).svg
 	$(INTERNET_BROWSER) $(SCHEM)/$(MODULE).svg
 
+run::
+	$(TARGET)/V$(TARGET)
