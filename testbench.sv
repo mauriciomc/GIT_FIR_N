@@ -38,7 +38,6 @@
 // eval:(setq verilog-auto-read-includes t)
 // End:
 
-`include "defines.v"
 
 module testbench_top (
                       input clk,
