@@ -18,28 +18,31 @@
 MODULE="fir_top"
 TARGET=testbench
 TESTS=./TESTS
-.PHONY: $(TARGET)
 RTL=./RTL
-all: $(TARGET)
-
 INTERNET_BROWSER="google-chrome"
+SCHEM=.
+
+
+.PHONY: $(TARGET)
 
 LDFLAGS=
 CFLAGS=-g -O3 -DMODULE=\'\"$(MODULE)\"\'
 
 
+all: $(TARGET)
+
 clean::
-	rm -rf *.o $(TARGET)
+	rm -rf *.o *.json *.svg .script $(TARGET) 
 
 distclean:: clean
-	rm -rf *~ *.txt *.vcd *.mif *.orig
+	rm -rf *~ *.txt *.vcd *.mif *.orig 
 
 $(TARGET):
 	verilator -Wno-fatal +incdir+lib -I. -I$(RTL) -I$(TESTS) -DINC_TEST_FILE="\`include \"$(MODULE).sv\"" -DMODULE=\"$(MODULE)\" --cc $(@).sv --trace --exe $(@).cpp -Mdir $(@) -CFLAGS "$(CFLAGS)"
 	make -C $(@) -f V$(@).mk 
 
 wave:
-	gtkwave -o ./$(TARGET)/V$(TARGET).vcd
+	gtkwave -S signals.tcl ./$(TARGET)/V$(TARGET).vcd 
 
 schem::
 	echo "read_verilog $(RTL)/$(MODULE).v"             > .script
