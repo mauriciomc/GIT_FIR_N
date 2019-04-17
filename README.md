@@ -2,11 +2,12 @@
 Nth order FIR filter
 
 ## REQUIRED TOOLS
-gcc make verilator gtkwave google-chrome
+gcc make verilator gtkwave google-chrome netlisvg yosys
 
 ## USAGE
-* make         _compiles circuit and testbench_
-* make clean   _removes all generated files_
-* make all     _compiles, executes testbench, opens schematics on web browser, opens waveforms_
-* make run     _executes testbench with RTL as DUT_
-* make wave    _opens waveforms on GTKWAVE_
+* **make**         _compiles circuit and testbench_
+* **make clean**   _removes all generated files_
+* **make all**     _compiles, executes testbench, opens schematics on web browser, opens waveforms_
+* **make run**     _executes testbench with RTL as DUT_
+* **make wave**    _opens waveforms on GTKWAVE_
+* **make schem**   _creates circuit schematic and opens on browser_
