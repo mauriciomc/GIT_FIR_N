@@ -12,7 +12,7 @@
 // -----------------------------------------------------------------------------
 // KEYWORDS    : General file searching keywords, leave blank if none.
 // -----------------------------------------------------------------------------
-// PURPOSE     : Short description of functionality
+// PURPOSE     : SystemC high-level testbench
 // -----------------------------------------------------------------------------
 // PARAMETERS
 //     PARAM NAME      RANGE    : DESCRIPTION       : DEFAULT : UNITS
