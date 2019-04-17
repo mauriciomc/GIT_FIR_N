@@ -17,10 +17,12 @@
 
 MODULE="fir_top"
 TARGET=testbench
-TESTS=./tests
+TESTS=./TESTS
 .PHONY: $(TARGET)
 RTL=./RTL
 all: $(TARGET)
+
+INTERNET_BROWSER="google-chrome"
 
 LDFLAGS=
 CFLAGS=-g -O3 -DMODULE=\'\"$(MODULE)\"\'
@@ -47,5 +49,5 @@ schem::
 	echo "exit"
 	yosys -s .script
 	netlistsvg $(SCHEM)/$(MODULE).json -o $(SCHEM)/$(MODULE).svg
-	google-chrome $(SCHEM)/$(MODULE).svg
+	$(INTERNET_BROWSER) $(SCHEM)/$(MODULE).svg
 
